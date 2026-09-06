@@ -29,17 +29,11 @@ export const Profile: FC = () => {
 
   const isFormChanged =
     formValue.name !== (user?.name || '') ||
-    formValue.email !== (user?.email || '');
+    formValue.email !== (user?.email || '') ||
+    !!formValue.password;
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-
-    const hasChanges =
-      formValue.name !== (user?.name || '') ||
-      formValue.email !== (user?.email || '') ||
-      !!formValue.password;
-
-    if (!hasChanges) return;
 
     const formData: Partial<{ name: string; email: string; password: string }> =
       {

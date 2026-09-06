@@ -16,13 +16,15 @@ type UserState = {
   isAuth: boolean;
   isUserLoading: boolean;
   errorUser: string | null;
+  isAuthChecked: boolean;
 };
 
 const initialState: UserState = {
   user: null,
   isAuth: false,
   isUserLoading: false,
-  errorUser: null
+  errorUser: null,
+  isAuthChecked: false
 };
 
 export const registerUser = createAsyncThunk(
@@ -114,15 +116,18 @@ const userSlice = createSlice({
 
       .addCase(getUser.pending, (state) => {
         state.isUserLoading = true;
+        state.isAuthChecked = false;
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.isUserLoading = false;
         state.user = action.payload;
         state.isAuth = true;
+        state.isAuthChecked = true;
       })
       .addCase(getUser.rejected, (state) => {
         state.isUserLoading = false;
         state.isAuth = false;
+        state.isAuthChecked = true;
       })
 
       .addCase(updateUser.pending, (state) => {
